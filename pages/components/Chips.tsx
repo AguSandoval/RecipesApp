@@ -20,6 +20,10 @@ const Chips: React.FC<{
         );
     };
 
+    const handleClearIngredients = () => {
+        setIngredients([]);
+    }
+
     return (
         <Flex
             justify="center"
@@ -46,6 +50,23 @@ const Chips: React.FC<{
                     />
                 </Tag>
             ))}
+            {ingredients?.length > 0 && (
+                <Tag
+                size="md"
+                key='clearAll'
+                borderRadius="full"
+                variant="solid"
+                colorScheme="gray"
+                m={1}
+            >
+                <TagLabel>
+                    <Text casing="capitalize">clear all</Text>
+                </TagLabel>
+                <TagCloseButton
+                    onClick={handleClearIngredients}
+                />
+            </Tag>
+            )}
         </Flex>
     );
 };

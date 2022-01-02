@@ -13,8 +13,12 @@ import { BiSearch } from "react-icons/bi";
 import useGetRecipesByIngredients from "../hooks/useGetRecipesByIngredients";
 import Chips from "./Chips";
 
-const SearchBar = () => {
+const SearchBar: React.FC<{setData: React.Dispatch<React.SetStateAction<any[]>>}> = ({setData}) => {
     const [ingredients, setIngredients] = useState<string[]>([]);
+    const [searchTerms, setSearchTerms] = useState<string>("");
+    const { data, error, isLoading } = useGetRecipesByIngredients(searchTerms);
+    setData(data);
+    // const query = useGetRecipesByIngredients(searchTerms);
 
     const handleEnterIngredients = (
         e: React.KeyboardEvent<HTMLInputElement>
@@ -29,11 +33,14 @@ const SearchBar = () => {
             e.currentTarget.value = "";
         }
     };
-    
+
     const handleSearch = () => {
-        const ingredientsStr = ingredients.join(',+');
-        useGetRecipesByIngredients(ingredientsStr);
-    }
+        setSearchTerms(ingredients.join(",+"));
+        // useGetRecipesByIngredients(ingredientsStr);
+    };
+
+    // console.log(data.length);
+    // console.log(isLoading);
 
     return (
         <Flex py={4} align="center" justify="center" direction="column">
